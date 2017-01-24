@@ -1,0 +1,23 @@
+{
+  "name": "styled-ax",
+  "version": "0.1.0",
+  "main": "dist/index.umd.js",
+  "browser": "dist/index.umd.js",
+  "jsnext:main": "src/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "dev": "jest --watch",
+    "test": "jest",
+    "build-dev": "npm t && rollup -c",
+    "build": "npm t && NODE_ENV=production rollup -c"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.1.8",
+    "buble": "^0.15.2",
+    "cross-env": "^3.1.4",
+    "jest": "^18.1.0",
+    "rollup": "^0.41.4",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-uglify": "^1.0.1"
+  }
+}
