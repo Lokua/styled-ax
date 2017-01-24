@@ -10,8 +10,7 @@
     "dev": "jest --watch",
     "test": "jest",
     "build-dev": "npm t && rollup -c",
-    "build": "cross-env NODE_ENV=production rollup -c",
-    "postinstall": "npm run build"
+    "build": "cross-env NODE_ENV=production rollup -c"
   },
   "repository": "https://github.com/Lokua/styled-ax.git",
   "author": "Joshua Kleckner <lokua@lokua.net>",
