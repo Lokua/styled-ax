@@ -2,8 +2,8 @@
   "name": "styled-ax",
   "description": "styled-components theme property accessor",
   "version": "0.1.0",
-  "main": "dist/index.umd.js",
-  "browser": "dist/index.umd.js",
+  "main": "dist/bundle.umd.min.js",
+  "browser": "dist/bundle.umd.min.js",
   "jsnext:main": "src/index.js",
   "module": "src/index.js",
   "scripts": {
