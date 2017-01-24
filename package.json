@@ -1,5 +1,6 @@
 {
   "name": "styled-ax",
+  "description": "styled-components theme property accessor",
   "version": "0.1.0",
   "main": "dist/index.umd.js",
   "browser": "dist/index.umd.js",
@@ -11,9 +12,11 @@
     "build-dev": "npm t && rollup -c",
     "build": "npm t && NODE_ENV=production rollup -c"
   },
+  "repository": "https://github.com/Lokua/styled-ax.git",
+  "author": "Joshua Kleckner <lokua@lokua.net>",
+  "license": "MIT",
   "devDependencies": {
     "babel-preset-env": "^1.1.8",
-    "buble": "^0.15.2",
     "cross-env": "^3.1.4",
     "jest": "^18.1.0",
     "rollup": "^0.41.4",

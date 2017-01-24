@@ -1,3 +1,3 @@
 # styled-ax
 
-> styled-components theme accessor 
+> styled-components theme accessor
