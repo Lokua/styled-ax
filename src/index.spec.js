@@ -61,4 +61,19 @@ describe(`ax`, () => {
     ax.o(`x`, `z`)(func)(props)
     expect(func).toHaveBeenLastCalledWith(4, 6)
   })
+
+  it(`should run results through function chain`, () => {
+    const actual = ax(`a`, `b`, `c`)(
+      (...args) => +args.map(x => x + x).join(``),
+      x => `${x}_${x}`
+    )(props)
+    expect(actual).toEqual(`246_246`)
+  })
+  it(`should run results through function chain (nested)`, () => {
+    const actual = o(`x`, `y`, `z`)(
+      (...args) => +args.map(x => x + x).join(``),
+      x => `${x}_${x}`
+    )(props)
+    expect(actual).toEqual(`81012_81012`)
+  })
 })
