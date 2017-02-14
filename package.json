@@ -1,7 +1,7 @@
 {
   "name": "styled-ax",
   "description": "styled-components theme property accessor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/bundle.umd.min.js",
   "browser": "dist/bundle.umd.min.js",
   "jsnext:main": "src/index.js",
