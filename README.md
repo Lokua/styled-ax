@@ -2,22 +2,24 @@
 
 > styled-components theme accessor
 
-
 ## Overview
 
 styled-ax (short for _accessor_) creates a theme property accessor for
-[styled-components][0]. It is lightweight (435 B min+gzip) with zero dependencies
-and purposely generic. It supports easy access of top level and nested object keys
+[styled-components][0]. It supports easy access of top level and nested object keys
 on a theme, as well as a simple interface for piping the accessed values
 through a chain of functions.
 
 ## Usage
 
+First you'll need to create a theme and pass it to styled-components [`ThemeProvider`][1]
+as you normally would.
+
 styled-ax supports the following theme structure:
 
 ```js
+// theme.js
 export default {
-  // top level key
+  // top level keys
   subtle: `floralwhite`,
 
   // and/or single level deep objects
@@ -27,7 +29,28 @@ export default {
 }
 ```
 
-Instead of default theme usage, where we
+Next, create your accessor, passing in your theme:
+
+```js
+import styledAx from 'styled-ax'
+// or `const styledAx = require(`styled-ax`).default`
+import theme from './theme'
+
+const ax = styledAx(theme)
+export default ax
+```
+
+Or if running in browser:
+```html
+<script src="./node_modules/styled-ax/dist/styled-ax.min.js"></script>
+<script>
+const theme = { /* ... */ }
+const ax  = window.styledAx.default(theme)
+</script>
+```
+
+
+Now, instead of default theme usage, where we
 ```js
 color: ${props => props.theme.subtle};
 ```  
@@ -37,11 +60,11 @@ You can
 color: ${ax(`subtle`)};
 ```
 
-Or if `subtle` is a property of a `color` object on your theme, you can
+Or if `subtle` is a property of a `color` object on your theme (like in the above example), you can
 ```js
 const { color } = ax
 
-export styled.div`
+const SubtleP = styled.p`
   color: ${color(`subtle`)};
 `
 ```
@@ -49,14 +72,7 @@ export styled.div`
 > Note that `color` above is just an example - you can call your keys and nested
 objects _whatever you want_
 
-Accessors can take a spread of functions to operate on the accessed values
-```js
-color: ${color(`subtle`, `notSoSubtle`)(darken, blend(`20%`))};
-```
-> Note that `darken` and `blend` are just examples, they are not included in this
-lib.
-
-Asking for multiple values will return them joined
+Asking for multiple values will return them joined:
 ```js
 // theme = { a: `1px`, b: `2px` }
 `margin: ${ax(`a`, `b`)};`
@@ -67,6 +83,28 @@ Asking for multiple values will return them joined
 ```js
 `margin: ${ax(`a`, `b`)(stripUnit)}em`
 // stripUnit would be called as stripUnit(`1px`, `2px`)
+```
+
+which brings us to...
+
+## Functions
+
+Accessors can take an optional spread of functions to operate on accessed values.
+The functions form a left to right pipeline, where the first function is passed a spread of the
+accessed theme values in order, and the following operate on the result:
+
+```js
+color: ${color(`primary`, `secondary`)(mix(0.5), darken)};
+```
+
+The `mix` and `darken` functions in the example could be implemented with [`chroma-js`][2]
+```js
+import chroma from 'chroma-js'
+
+export const darken = color => chroma(color).darken(1)
+
+// if your function accepts parameters, use partial application
+export const mix = amount => (color1, color2) => chroma.mix(color1, color2, amount)
 ```
 
 ## Tips
@@ -94,25 +132,21 @@ then you can
 import { color, media } from './my-ax'
 ```
 
-#### Custom functions
+#### Conditionals
 
-An accessor takes in names of variables and returns a function that is
-expecting props from styled-components, or one or more functions. The function
-signature is `(...input) => { /* anything */ }`. If you need configuration
-arguments for your custom function, you can use partial application:
+An accessor accepts values and returns a function that expecting props, so if you
+need some conditional based on props, you can pass them into ax manually
 
-**Example**
-```
-const sum = (...args) => args.reduce((total, n) => total + n, 0)
-// margin: ax(`a`, `b`)(sum)
-
-const sumV2 = (...params) => (...args) => sum(...params.concat(args))
-// margin: ax(`a`, `b`)(sumV2(99, 44)) /* a+b+99+44 */
+```js
+`color: ${props => ax.color(props.active ? `active` : `default`)(props)};`
 ```
 
-Note that only the first function will receive the accessed theme values,
-all subsequent functions are passed the output of the previous - they are
-unary.
+Even better, as that's pretty awkward, you can use styled-ax along with
+`ifProp` from [styled-tools][3]!
+
+```js
+`color: ${ifProp(`active`, ax.color(`active`), ax.color(`default`))}`
+```
 
 ## Install
 
@@ -127,3 +161,6 @@ npm i styled-ax
 ## License MIT
 
 [0]: https://github.com/styled-components/styled-components
+[1]: https://github.com/styled-components/styled-components/blob/master/docs/api.md#themeprovider
+[2]: https://gka.github.io/chroma.js/
+[3]: https://github.com/diegohaz/styled-tools
