@@ -2,24 +2,25 @@
   "name": "styled-ax",
   "description": "styled-components theme property accessor",
   "version": "1.0.1",
-  "main": "dist/bundle.umd.min.js",
-  "browser": "dist/bundle.umd.min.js",
-  "jsnext:main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/styled-ax.min.js",
+  "module": "dist/styled-ax.es2015.js",
   "scripts": {
     "dev": "jest --watch",
     "test": "jest",
-    "build": "cross-env NODE_ENV=production rollup -c"
+    "build-module": "babel -o dist/styled-ax.es2015.js ./src/index.js",
+    "build": "npm run build-module && webpack --config ./webpack.config.js"
   },
   "repository": "https://github.com/Lokua/styled-ax.git",
-  "author": "Joshua Kleckner <lokua@lokua.net>",
+  "author": "Joshua Kleckner <lokua@lokua.net> (https://github.com/lokua)",
   "license": "MIT",
   "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.4.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-env": "^1.1.8",
     "cross-env": "^3.1.4",
     "jest": "^18.1.0",
-    "rollup": "^0.41.4",
-    "rollup-plugin-buble": "^0.15.0",
-    "rollup-plugin-uglify": "^1.0.1"
-  }
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {}
 }
