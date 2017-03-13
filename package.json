@@ -10,6 +10,11 @@
     "build-module": "babel -o dist/styled-ax.es2015.js ./src/index.js",
     "build": "npm run build-module && webpack --config ./webpack.config.js"
   },
+  "keywords": [
+    "styled-components",
+    "theme",
+    "syled-ax"
+  ],
   "repository": "https://github.com/Lokua/styled-ax.git",
   "author": "Joshua Kleckner <lokua@lokua.net> (https://github.com/lokua)",
   "license": "MIT",
@@ -18,7 +23,6 @@
     "babel-loader": "^6.4.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-env": "^1.1.8",
-    "cross-env": "^3.1.4",
     "jest": "^18.1.0",
     "webpack": "^2.2.1"
   },
