@@ -1,7 +1,7 @@
 {
   "name": "styled-ax",
   "description": "styled-components theme property accessor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/styled-ax.min.js",
   "module": "dist/styled-ax.es2015.js",
   "scripts": {
